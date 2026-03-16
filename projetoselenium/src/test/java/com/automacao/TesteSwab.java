@@ -41,14 +41,14 @@ public class TesteSwab {
         WebDriverWait espera = new WebDriverWait(navegador, Duration.ofSeconds(10));
         //chama a regra para esperar por no max 10 segundos ate que o elemento esteja visivel 
         espera.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("user-name")));
-        Thread.sleep(1000);
+        
 
         // encontra o elemento do username e da senha e o send keys envia o texto
         LoginPages paginaLogin = new LoginPages(navegador);
         paginaLogin.escreverNomeLogin("visual_user");
         paginaLogin.digitarSenha("secret_sauce");
         paginaLogin.cliqueBotaoLogin();
-        Thread.sleep(1000);
+        
 
        VitrinePage paginaVitrine = new VitrinePage(navegador);
 
@@ -61,7 +61,7 @@ public class TesteSwab {
 
 
         espera.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("inventory_item_name")));
-        Thread.sleep(1000);
+        
         //verifica se o produto é o mesmo que foi selecionado
         CarrinhoPage paginaCarrinho = new CarrinhoPage(navegador);
 
@@ -83,7 +83,6 @@ public class TesteSwab {
        paginaCheckout.escreveNomeCheckout(nomeA);
        paginaCheckout.escreveSobreNomeCheckout(nomeB);
        paginaCheckout.cepCheckout(cep);
-       Thread.sleep(1000);
        paginaCheckout.clicaBotaoContinue();
 
         // finaliza a compra
@@ -100,7 +99,7 @@ public class TesteSwab {
         
 
 
-        Thread.sleep(1000);
+        
         navegador.quit();
     }
       
