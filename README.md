@@ -1,6 +1,6 @@
 # 🛒 Automação E2E - E-commerce Swag Labs
 
-![Demonstração da Automação](evidencias.AutomacaoBasicSelenium.gif)
+![Demonstração da Automação](evidencias/AutomacaoBasicSelenium.gif)
 ## 🎯 Sobre o Projeto
 Este projeto é um framework de automação de testes End-to-End (E2E) desenvolvido para validar o fluxo completo de compras do e-commerce [Swag Labs](https://www.saucedemo.com/). O teste simula o comportamento de um usuário real, passando por todas as etapas críticas do sistema.
 
