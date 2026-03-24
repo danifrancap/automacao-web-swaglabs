@@ -17,6 +17,7 @@ public class LoginPages {
         private By acharNome = By.id("user-name");
         private By senhaCorreta = By.id("password");
         private By botaoLogin = By.id("login-button");
+        private By mensagemErro = By.xpath("//h3[@data-test='error']");
 
 
         public void escreverNomeLogin(String nomeLogin){
@@ -27,6 +28,10 @@ public class LoginPages {
         }
         public void cliqueBotaoLogin(){
             navegador.findElement(botaoLogin).click();
+        }
+        public String validaErro(){
+            return navegador.findElement(mensagemErro).getText();
+
         }
     
     }

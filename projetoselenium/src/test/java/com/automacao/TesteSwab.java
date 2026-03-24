@@ -1,6 +1,9 @@
 package com.automacao;
 import java.time.Duration;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,37 +21,46 @@ import com.automacao.pages.ResumoPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TesteSwab {
+  WebDriver navegador;
+  WebDriverWait espera;
+        
+  @BeforeEach
+    public void abrirNav(){
+      ChromeOptions opcoes = new ChromeOptions();
+        opcoes.addArguments("--disable-features=PasswordLeakDetection");
+        opcoes.addArguments("--incognito");
+        navegador = new ChromeDriver(opcoes);
+        WebDriverManager.chromedriver().setup();
+        espera = new WebDriverWait(navegador, Duration.ofSeconds(10));
+        navegador.get("https://www.saucedemo.com/");
+        navegador.manage().window().maximize();
+        espera.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("user-name")));
+
+    }
+    @AfterEach
+    public void fecharNav(){
+      navegador.quit();
+    }
+    @Test
+    public void validaLoginErrado(){
+       LoginPages paginaLogin = new LoginPages(navegador);
+        paginaLogin.escreverNomeLogin("visual_us1er");
+        paginaLogin.digitarSenha("secret_sa1uce");
+        paginaLogin.cliqueBotaoLogin();
+        String validaErro = paginaLogin.validaErro();
+        Assertions.assertEquals("Epic sadface: Username and password do not match any user in this service", validaErro);
+
+    }
 
     @Test
     public void validarPrimeiroProduto() throws InterruptedException {
-
-          //busca e configura o navegador
-        WebDriverManager.chromedriver().setup();
-
-        ChromeOptions opcoes = new ChromeOptions();
-        opcoes.addArguments("--disable-features=PasswordLeakDetection");
-        opcoes.addArguments("--incognito");
-        
-        //abre o navegador
-        WebDriver navegador = new ChromeDriver(opcoes);
-        
-        
-        //pega o navegador em branco e direciona ele para um site
-        navegador.get("https://www.saucedemo.com/");
-        //o manaje busca as configuraçoes no chorme, o window seleciona a janela, o maxime deixa ela grande
-        navegador.manage().window().maximize();
-        // cria a regra de espera para poder chamar futuramente
-        WebDriverWait espera = new WebDriverWait(navegador, Duration.ofSeconds(10));
-        //chama a regra para esperar por no max 10 segundos ate que o elemento esteja visivel 
-        espera.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("user-name")));
-        
 
         // encontra o elemento do username e da senha e o send keys envia o texto
         LoginPages paginaLogin = new LoginPages(navegador);
         paginaLogin.escreverNomeLogin("visual_user");
         paginaLogin.digitarSenha("secret_sauce");
         paginaLogin.cliqueBotaoLogin();
-        
+       
 
        VitrinePage paginaVitrine = new VitrinePage(navegador);
 
@@ -100,7 +112,7 @@ public class TesteSwab {
 
 
         
-        navegador.quit();
+        
     }
       
 }
